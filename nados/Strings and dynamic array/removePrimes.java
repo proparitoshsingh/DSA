@@ -13,17 +13,19 @@ public class removePrimes {
             int n=lst.get(i);
             if(n==2){
                 lst.remove(i);
+                i--;
                 continue;
             }
             int mid=n/2;
             int count=0;
             for(int j=3;j<=mid+1;j+=2){
-                if(n%j==0){
+                if(n%j==0  || n%2==0){
                     count++;
                     continue;
                 }
             }if(count==0){
                 lst.remove(i);
+                i--;
             }
         }
         System.out.println(lst);
