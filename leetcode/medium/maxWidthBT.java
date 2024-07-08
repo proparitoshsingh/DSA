@@ -18,7 +18,7 @@ class Solution {
       Queue<Pair> q=new LinkedList<>();
       q.offer(new Pair(root,0));
       while (!q.isEmpty()) {
-         int size=q.size;
+         int size=q.size();
          int mmin=q.peek().num;
          int first=0,last=0;
          for(int i=0;i<size;i++){
@@ -34,7 +34,7 @@ class Solution {
                q.offer(new Pair(node.right,curr*2+2));
             }
          }
-         ans=Math.max(res, last-first+1);
+         res=Math.max(res, last-first+1);
       }
       return res;
    }
