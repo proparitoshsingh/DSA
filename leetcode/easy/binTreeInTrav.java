@@ -21,38 +21,69 @@ import javax.swing.tree.TreeNode;
 // iterative approach
 
 // class Solution {
-//    public List<Integer> inorderTraversal(TreeNode root) {
-//       List<Integer> result = new ArrayList<>();
-//       Stack<TreeNode> stack = new Stack<>();
-//       TreeNode current = root;
+// public List<Integer> inorderTraversal(TreeNode root) {
+// List<Integer> result = new ArrayList<>();
+// Stack<TreeNode> stack = new Stack<>();
+// TreeNode curr = root;
 
-//       while (current != null || !stack.isEmpty()) {
-//          while (current != null) {
-//             stack.push(current);
-//             current = current.left;
-//          }
-//          current = stack.pop();
-//          result.add(current.val);
-//          current = current.right;
-//       }
+// while (curr != null || !stack.isEmpty()) {
+// while (curr != null) {
+// stack.push(curr);
+// curr = curr.left;
+// }
+// curr = stack.pop();
+// result.add(curr.val);
+// curr = curr.right;
+// }
 
-//       return result;
-//    }
+// return result;
+// }
 // }
 
 // recursive solution
+// class Solution {
+//    public List<Integer> inorderTraversal(TreeNode root) {
+//       List<Integer> result = new ArrayList<>();
+//       inorder(root, result);
+//       return result;
+//    }
+
+//    private void inorder(TreeNode node, List<Integer> result) {
+//       if (node != null) {
+//          inorder(node.left, result);
+//          result.add(node.val);
+//          inorder(node.right, result);
+//       }
+//    }
+// }
+
+
+// morris inorder traversal (best approach)
 class Solution {
    public List<Integer> inorderTraversal(TreeNode root) {
       List<Integer> result = new ArrayList<>();
-      inorder(root, result);
-      return result;
-   }
+      TreeNode curr = root;
 
-   private void inorder(TreeNode node, List<Integer> result) {
-      if (node != null) {
-         inorder(node.left, result);
-         result.add(node.val);
-         inorder(node.right, result);
+      while (curr != null) {
+         if (curr.left == null) {
+            result.add(curr.val);
+            curr = curr.right;
+         } else {
+            TreeNode pred = curr.left;
+            while (pred.right != null && pred.right != curr) {
+               pred = pred.right;
+            }
+            if (pred.right == null) {
+               pred.right = curr;
+               curr = curr.left;
+            } else {
+               pred.right = null;
+               result.add(curr.val);
+               curr = curr.right;
+            }
+         }
       }
+
+      return result;
    }
 }
